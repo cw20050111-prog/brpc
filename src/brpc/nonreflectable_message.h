@@ -288,8 +288,13 @@ private:
 #    endif
                 ) {
             // Only can be used to determine whether the Types are the same.
-            descriptor = default_instance().GetMetadata().descriptor;
-            reflection = default_instance().GetMetadata().reflection;
+#    if GOOGLE_PROTOBUF_VERSION >= 7035000
+            descriptor_ptr = reinterpret_cast<const ::google::protobuf::Descriptor*>(&_instance);
+            reflection_ptr = reinterpret_cast<const ::google::protobuf::Reflection*>(&_instance);
+#    else
+            descriptor = reinterpret_cast<const ::google::protobuf::Descriptor*>(&_instance);
+            reflection = reinterpret_cast<const ::google::protobuf::Reflection*>(&_instance);
+#    endif
         }
     };
 
